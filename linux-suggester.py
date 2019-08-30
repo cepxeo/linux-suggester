@@ -117,6 +117,7 @@ userInfo = {"WHOAMI":{"cmd":"whoami", "msg":"Current User", "results":results},
 	    "ID":{"cmd":"id","msg":"Current User ID", "results":results},
 	    "ALLUSERS":{"cmd":"cat /etc/passwd  | grep -v nologin", "msg":"All users", "results":results},
 	    "SUPUSERS":{"cmd":"grep -v -E '^#' /etc/passwd | awk -F: '$3 == 0{print $1}'", "msg":"Super Users Found:", "results":results},
+        "NOPASSWD":{"cmd":"cut -f1-2 -d':' /etc/passwd | grep -v ':x$'", "msg":"Users with no password set:", "results":results},
 	    "HISTORY":{"cmd":"ls -la ~/.*_history; ls -la /root/.*_history 2>/dev/null", "msg":"Root and current user history (depends on privs)", "results":results},
 	    "ENV":{"cmd":"env 2>/dev/null | grep -v 'LS_COLORS'", "msg":"Environment", "results":results},
         #"SUDO":{"cmd":"sudo -l 2>/dev/null", "msg":"Sudo commands avaliable", "results":results},
@@ -153,19 +154,19 @@ SenseFiles = {"SHADOW":{"cmd":"cat /etc/shadow 2>/dev/null", "msg":"Shadow File 
         "ROOTHOME":{"cmd":"ls -la /root 2>/dev/null", "msg":"Checking if root's home folder is accessible", "results":results},
         "SSHkeys":{"cmd":"ls -ahlR /var/ssh 2>/dev/null; ls -ahlR ~/.ssh 2>/dev/null", "msg":"SSH Directories", "results":results},
         "SSHkeys":{"cmd":"cat ~/.ssh/known_hosts | cut -d ',' -f1 | cut -d ' ' -f1 | sort -u 2>/dev/null", "msg":"Known Hosts for the current user", "results":results},
-        "MISCFILES":{"cmd":"locate -d /tmp/linux-suggester.db id_rsa 'initparm.cfg' '*.svn-base' 'config.php' '.git' 2>/dev/null", "msg":"Interesting files (Connect:Direct, SVN, SSH keys, php config)", "results":results},
-        "UC4":{"cmd":"ls -la /var/scheduling/temp/*SMGR* 2>/dev/null", "msg":"UC4 log files at /var/scheduling/temp containing passwords", "results":results},
+        "MISCFILES":{"cmd":"locate -d /tmp/linux-suggester.db id_rsa '*.svn-base' 'config.php' '.git' 2>/dev/null", "msg":"Interesting files (SVN, SSH keys, php config)", "results":results},
 	    "SVNREPO":{"cmd":"locate -d /tmp/linux-suggester.db '.subversion' 2>/dev/null", "msg":"SVN property files", "results":results},
-        "SOURCECODE":{"cmd":"locate -d /tmp/linux-suggester.db '*.java' '*.php' '*.c' '*.cpp' 2>/dev/null", "msg":"Source code", "results":results}
+        "SOURCECODE":{"cmd":"locate -d /tmp/linux-suggester.db '*.java' '*.php' '*.c' '*.cpp' '*.sql' 2>/dev/null", "msg":"Source code", "results":results},
+        "ARCHIVES":{"cmd":"locate -d /tmp/linux-suggester.db '*.bz2' '*.7z' '*.tgz' '*.zip' 2>/dev/null", "msg":"Archives", "results":results}
 	   }
 
 SenseFiles = execCmd(SenseFiles)
 printResults(SenseFiles)
 
-pwdFiles = {"CFGPASSWD":{"cmd":"for fil in $(locate -d /tmp/linux-suggester.db '*.pass*' *.prop*' *.sgml' '*.log' '*.conf' '*.config' '*.ini' '*.sh' | grep '/opt' 2>/dev/null); do fgrep -i passw $fil 2>/dev/null;; done", "msg":"Config files in /opt containing keyword 'password'", "results":results},
-        "CONFPWDS":{"cmd":"for fil in $(locate -d /tmp/linux-suggester.db '*.pass*' *.prop*' *.sgml' '*.log' '*.c*' '*.ini' '*.sh' | grep '/etc' 2>/dev/null); do fgrep -i passw $fil 2>/dev/null;; done", "msg":"Config files in /etc containing keyword 'password'", "results":results},
-        "JDBCPASSWD":{"cmd":"for fil in $(locate -d /tmp/linux-suggester.db '*.pass*' *.prop*' *.sgml' '*.log' '*.conf' '*.config' '*.ini' '*.sh' | grep '/opt' 2>/dev/null); do fgrep -i jdbc $fil 2>/dev/null; done", "msg":"Config files in /opt containing keyword 'jdbc'", "results":results},
-        "JDPWDS":{"cmd":"for fil in $(locate -d /tmp/linux-suggester.db '*.pass*' *.prop*' *.sgml' '*.log' '*.c*' '*.ini' '*.sh' | grep '/etc' 2>/dev/null); do fgrep -i jdbc $fil 2>/dev/null; done", "msg":"Config files in /etc containing keyword 'jdbc'", "results":results}
+pwdFiles = {"CFGPASSWD":{"cmd":"for fil in $(locate -d /tmp/linux-suggester.db '*.pass*' '*.prop*' '*.sgml' '*.log' '*.conf' '*.cfg' '*.config' '*.ini' '*.sh' | grep '/opt' 2>/dev/null); do fgrep -i passw $fil 2>/dev/null;; done", "msg":"Config files in /opt containing keyword 'password'", "results":results},
+        "CONFPWDS":{"cmd":"for fil in $(locate -d /tmp/linux-suggester.db '*.pass*' '*.prop*' '*.sgml' '*.log' '*.c*' '*.ini' '*.sh' | grep '/etc' 2>/dev/null); do fgrep -i passw $fil 2>/dev/null;; done", "msg":"Config files in /etc containing keyword 'password'", "results":results},
+        "JDBCPASSWD":{"cmd":"for fil in $(locate -d /tmp/linux-suggester.db '*.pass*' '*.prop*' '*.sgml' '*.log' '*.conf' '*.config' '*.ini' '*.sh' | grep '/opt' 2>/dev/null); do fgrep -i jdbc $fil 2>/dev/null; done", "msg":"Config files in /opt containing keyword 'jdbc'", "results":results},
+        "JDPWDS":{"cmd":"for fil in $(locate -d /tmp/linux-suggester.db '*.pass*' '*.prop*' '*.sgml' '*.log' '*.c*' '*.ini' '*.sh' | grep '/etc' 2>/dev/null); do fgrep -i jdbc $fil 2>/dev/null; done", "msg":"Config files in /etc containing keyword 'jdbc'", "results":results}
 	   }
 
 pwdFiles = execCmd(pwdFiles)
@@ -188,7 +189,7 @@ getAppProc = execCmd(getAppProc)
 
 otherApps = { "SUDO":{"cmd":"sudo -V | grep version 2>/dev/null", "msg":"Sudo Version (Check out http://www.exploit-db.com/search/?action=search&filter_page=1&filter_description=sudo)", "results":results},
 	      "APACHE":{"cmd":"apache2 -v; apache2ctl -M; httpd -v; apachectl -l 2>/dev/null", "msg":"Apache Version and Modules", "results":results},
-	      "APACHECONF":{"cmd":"cat /etc/apache2/apache2.conf 2>/dev/null", "msg":"Apache Config File", "results":results}
+	      #"APACHECONF":{"cmd":"cat /etc/apache2/apache2.conf 2>/dev/null", "msg":"Apache Config File", "results":results}
 	    }
 
 otherApps = execCmd(otherApps)
