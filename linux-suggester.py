@@ -41,7 +41,7 @@ def execCmd(cmdDict):
 def chkSuid(cmdDict):
     item = "SUIDforChk"
     print "[+] " + cmdDict[item]["msg"]
-    knownBins = ['apt-get', 'apt', 'aria2c', 'ash', 'awk', 'base64', 'bash', 'binaries', 'busybox', 'cat', 'chmod', 'chown', 'cp', 'cpulimit', 'crontab', 'csh', 'curl', 'cut', 'dash', 'date', 'dd', 'diff', 'docker', 'easy_install', 'ed', 'emacs', 'env', 'expand', 'expect', 'facter', 'find', 'finger', 'flock', 'fmt', 'fold', 'ftp', 'gdb', 'git', 'grep', 'head', 'ionice', 'jjs', 'journalctl', 'jq', 'jrunscript', 'ksh', 'ld', 'less', 'ltrace', 'lua', 'mail', 'make', 'mawk', 'man', 'more', 'mount', 'mv', 'mysql', 'nano', 'nc', 'nice', 'nl', 'nmap', 'node', 'od', 'perl', 'pg', 'php', 'pico', 'pip', 'puppet', 'python', 'red', 'rlwrap', 'rpm', 'rpmquery', 'rsync', 'ruby', 'scp', 'sed', 'setarch', 'sftp', 'shuf', 'smbclient', 'socat', 'sort', 'sqlite3', 'ssh', 'stdbuf', 'strace', 'tail', 'tar', 'taskset', 'tclsh', 'tcpdump', 'tee', 'telnet', 'tftp', 'time', 'timeout', 'ul', 'unexpand', 'uniq', 'unshare', 'vi', 'vim', 'watch', 'wget', 'whois', 'wish', 'xargs', 'xxd', 'zip', 'zsh']
+    knownBins = ['apt-get', 'apt', 'aria2c', 'ash', 'awk', 'base64', 'bash', 'binaries', 'busybox', 'cat', 'chmod', 'chown', 'cp', 'cpulimit', 'csh', 'curl', 'cut', 'dash', 'date', 'dd', 'diff', 'docker', 'easy_install', 'ed', 'emacs', 'env', 'expand', 'expect', 'facter', 'find', 'finger', 'flock', 'fmt', 'fold', 'ftp', 'gdb', 'git', 'grep', 'head', 'ionice', 'jjs', 'journalctl', 'jq', 'jrunscript', 'ksh', 'ld', 'less', 'ltrace', 'lua', 'mail', 'make', 'mawk', 'man', 'more', 'mv', 'mysql', 'nano', 'nc', 'nice', 'nl', 'nmap', 'node', 'od', 'perl', 'pg', 'php', 'pico', 'pip', 'puppet', 'python', 'red', 'rlwrap', 'rpm', 'rpmquery', 'rsync', 'ruby', 'scp', 'sed', 'setarch', 'sftp', 'shuf', 'smbclient', 'socat', 'sort', 'sqlite3', 'ssh', 'stdbuf', 'strace', 'tail', 'tar', 'taskset', 'tclsh', 'tcpdump', 'tee', 'telnet', 'tftp', 'time', 'timeout', 'ul', 'unexpand', 'uniq', 'unshare', 'vi', 'vim', 'watch', 'wget', 'whois', 'wish', 'xargs', 'xxd', 'zip', 'zsh']
     print list(set(cmdDict[item]["results"]).intersection(knownBins))
     print
 
@@ -156,7 +156,7 @@ SenseFiles = {"SHADOW":{"cmd":"cat /etc/shadow 2>/dev/null", "msg":"Shadow File 
         "SSHkeys":{"cmd":"cat ~/.ssh/known_hosts | cut -d ',' -f1 | cut -d ' ' -f1 | sort -u 2>/dev/null", "msg":"Known Hosts for the current user", "results":results},
         "MISCFILES":{"cmd":"locate -d /tmp/linux-suggester.db id_rsa '*.svn-base' 'config.php' '.git' 2>/dev/null", "msg":"Interesting files (SVN, SSH keys, php config)", "results":results},
 	    "SVNREPO":{"cmd":"locate -d /tmp/linux-suggester.db '.subversion' 2>/dev/null", "msg":"SVN property files", "results":results},
-        "SOURCECODE":{"cmd":"locate -d /tmp/linux-suggester.db '*.java' '*.php' '*.c' '*.cpp' '*.sql' 2>/dev/null", "msg":"Source code", "results":results},
+        #"SOURCECODE":{"cmd":"locate -d /tmp/linux-suggester.db '*.java' '*.php' '*.c' '*.cpp' '*.sql' 2>/dev/null", "msg":"Source code", "results":results},
         "ARCHIVES":{"cmd":"locate -d /tmp/linux-suggester.db '*.bz2' '*.7z' '*.tgz' '*.zip' 2>/dev/null", "msg":"Archives", "results":results}
 	   }
 
