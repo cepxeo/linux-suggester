@@ -23,7 +23,7 @@
     "qs": "^6.9.6",
     "react": "17.0.1",
     "react-app-polyfill": "^2.0.0",
-    "react-beautiful-dnd": "13.0.0",
+    "react-beautiful-dnd": "13.1.0",
     "react-day-picker": "^7.4.8",
     "react-device-detect": "^1.15.0",
     "react-dnd": "^11.1.3",
