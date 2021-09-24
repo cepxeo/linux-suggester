@@ -38,7 +38,7 @@
     "react-select": "^4.0.2",
     "react-super-responsive-table": "^5.2.0",
     "react-text-mask": "^5.4.3",
-    "reactstrap": "8.9.0",
+    "reactstrap": "8.10.0",
     "recompose": "^0.30.0",
     "redux": "^4.0.5",
     "redux-form": "^8.3.7",
