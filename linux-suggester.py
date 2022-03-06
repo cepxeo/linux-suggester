@@ -153,20 +153,21 @@ chkSuid(fdPermChk)
 SenseFiles = {"SHADOW":{"cmd":"cat /etc/shadow 2>/dev/null", "msg":"Shadow File (Privileged)", "results":results},
         "ROOTHOME":{"cmd":"ls -la /root 2>/dev/null", "msg":"Checking if root's home folder is accessible", "results":results},
         "SSHkeys":{"cmd":"ls -ahlR /var/ssh 2>/dev/null; ls -ahlR ~/.ssh 2>/dev/null", "msg":"SSH Directories", "results":results},
-        "SSHkeys":{"cmd":"cat ~/.ssh/known_hosts | cut -d ',' -f1 | cut -d ' ' -f1 | sort -u 2>/dev/null", "msg":"Known Hosts for the current user", "results":results},
+        "KNOWNHOSTS":{"cmd":"cat ~/.ssh/known_hosts | cut -d ',' -f1 | cut -d ' ' -f1 | sort -u 2>/dev/null", "msg":"Known Hosts for the current user", "results":results},
         "MISCFILES":{"cmd":"locate -d /tmp/linux-suggester.db id_rsa '*.svn-base' 'config.php' '.git' 2>/dev/null", "msg":"Interesting files (SVN, SSH keys, php config)", "results":results},
 	    "SVNREPO":{"cmd":"locate -d /tmp/linux-suggester.db '.subversion' 2>/dev/null", "msg":"SVN property files", "results":results},
         #"SOURCECODE":{"cmd":"locate -d /tmp/linux-suggester.db '*.java' '*.php' '*.c' '*.cpp' '*.sql' 2>/dev/null", "msg":"Source code", "results":results},
+        "KEYTABS":{"cmd":"locate -d /tmp/linux-suggester.db '*.keytab' 2>/dev/null", "msg":"Keytabs", "results":results},
         "ARCHIVES":{"cmd":"locate -d /tmp/linux-suggester.db '*.bz2' '*.7z' '*.tgz' '*.zip' 2>/dev/null", "msg":"Archives", "results":results}
 	   }
 
 SenseFiles = execCmd(SenseFiles)
 printResults(SenseFiles)
 
-pwdFiles = {"CFGPASSWD":{"cmd":"for fil in $(locate -d /tmp/linux-suggester.db '*.pass*' '*.prop*' '*.sgml' '*.log' '*.conf' '*.cfg' '*.config' '*.ini' '*.sh' | grep '/opt' 2>/dev/null); do fgrep -i passw $fil 2>/dev/null;; done", "msg":"Config files in /opt containing keyword 'password'", "results":results},
-        "CONFPWDS":{"cmd":"for fil in $(locate -d /tmp/linux-suggester.db '*.pass*' '*.prop*' '*.sgml' '*.log' '*.c*' '*.ini' '*.sh' | grep '/etc' 2>/dev/null); do fgrep -i passw $fil 2>/dev/null;; done", "msg":"Config files in /etc containing keyword 'password'", "results":results},
-        "JDBCPASSWD":{"cmd":"for fil in $(locate -d /tmp/linux-suggester.db '*.pass*' '*.prop*' '*.sgml' '*.log' '*.conf' '*.config' '*.ini' '*.sh' | grep '/opt' 2>/dev/null); do fgrep -i jdbc $fil 2>/dev/null; done", "msg":"Config files in /opt containing keyword 'jdbc'", "results":results},
-        "JDPWDS":{"cmd":"for fil in $(locate -d /tmp/linux-suggester.db '*.pass*' '*.prop*' '*.sgml' '*.log' '*.c*' '*.ini' '*.sh' | grep '/etc' 2>/dev/null); do fgrep -i jdbc $fil 2>/dev/null; done", "msg":"Config files in /etc containing keyword 'jdbc'", "results":results}
+pwdFiles = {"CFGPASSWD":{"cmd":"locate -d /tmp/linux-suggester.db '*.pass*' '*.prop*' '*.sgml' '*.log' '*.conf' '*.cfg' '*.config' '*.ini' '*.sh' | grep '/opt' 2>/dev/null", "msg":"Config files in /opt containing keyword 'password'", "results":results},
+        "CONFPWDS":{"cmd":"locate -d /tmp/linux-suggester.db '*.pass*' '*.prop*' '*.sgml' '*.log' '*.c*' '*.ini' '*.sh' | grep '/etc' 2>/dev/null", "msg":"Config files in /etc containing keyword 'password'", "results":results},
+        "JDBCPASSWD":{"cmd":"locate -d /tmp/linux-suggester.db '*.pass*' '*.prop*' '*.sgml' '*.log' '*.conf' '*.config' '*.ini' '*.sh' | grep '/opt' 2>/dev/null", "msg":"Config files in /opt containing keyword 'jdbc'", "results":results},
+        "JDPWDS":{"cmd":"locate -d /tmp/linux-suggester.db '*.pass*' '*.prop*' '*.sgml' '*.log' '*.c*' '*.ini' '*.sh' | grep '/etc' 2>/dev/null", "msg":"Config files in /etc containing keyword 'jdbc'", "results":results}
 	   }
 
 pwdFiles = execCmd(pwdFiles)
